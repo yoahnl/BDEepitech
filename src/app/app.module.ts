@@ -3,16 +3,21 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
+import { MyApp } from './app.component';
+
+// FireBase Module
 import { AngularFireModule } from "angularfire2";
 import { AngularFireAuthModule } from "angularfire2/auth";
-
-import { MyApp } from './app.component';
+import {AngularFireDatabaseModule} from "angularfire2/database";
 import {FIREBASE_CONFIG} from "./app.firebase.config";
+
 
 // My page
 import {LoginPage} from "../pages/login/login";
 import {RegisterPage} from "../pages/register/register";
 import { HomePage } from "../pages/home/home";
+import {ProfilePage} from "../pages/profile/profile";
+import {Global} from "../models/global";
 
 
 @NgModule({
@@ -20,24 +25,28 @@ import { HomePage } from "../pages/home/home";
     MyApp,
     LoginPage,
     RegisterPage,
-    HomePage
+    HomePage,
+    ProfilePage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(FIREBASE_CONFIG),
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    AngularFireDatabaseModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     LoginPage,
     RegisterPage,
-    HomePage
+    HomePage,
+    ProfilePage
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    Global,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

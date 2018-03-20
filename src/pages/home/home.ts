@@ -1,6 +1,10 @@
+///<reference path="../../models/global.ts"/>
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { AngularFireAuth } from "angularfire2/auth";
+import {AngularFireDatabase} from "angularfire2/database";
+import {Profile} from "../../models/profile";
+import {Observable} from "rxjs/Observable";
 
 /**
  * Generated class for the HomePage page.
@@ -16,18 +20,54 @@ import { AngularFireAuth } from "angularfire2/auth";
 })
 export class HomePage
 {
+  info: any;
+  labels: any;
+  header: Observable<any>;
+  public myData;
 
-  constructor(private afAuth: AngularFireAuth, public navCtrl: NavController, public navParams: NavParams, private toast: ToastController)
+  constructor(private afAuth: AngularFireAuth, public navCtrl: NavController, public navParams: NavParams, private toast: ToastController, private afDatabase: AngularFireDatabase)
   {
+
+
   }
 
-  ionViewDidLoad() {
+
+  ionViewWillLoad()
+  {
     this.afAuth.authState.subscribe(data => {
       this.toast.create({
         message: `Welcome to the Epitech's BDE application ${data.email}`,
         duration: 3000
       }).present();
+
+      console.log(data.uid);
+
+
+      this.header = this.afDatabase.list('/profile/' + data.uid).valueChanges();
+      this.header.subscribe(data =>
+      {
+        this.myData = data;
+        //this.myData = this.myData[0];
+
+      });
     });
+
+
   }
+
+  getUserInfo(): any
+  {
+
+    var user = this.afAuth.auth.currentUser;
+    if (user) {
+      var getUserInfo = this.afDatabase.database.ref('profile/' + user.uid);
+
+      this.info = getUserInfo.once('value', function (snap)
+      {
+
+      });
+    }
+  }
+
 
 }
