@@ -6,8 +6,6 @@ import {AngularFireDatabase} from "angularfire2/database";
 import {Profile} from "../../models/profile";
 import {Observable} from "rxjs/Observable";
 import {UserInfoService} from "../../services/userInfo/UserInfo.service";
-import {UserInfo} from "firebase/app";
-import {Pro} from "@ionic/pro";
 import {Global} from "../../models/global";
 
 /**
@@ -27,7 +25,7 @@ export class HomePage
   info: any;
   labels: any;
   header: Observable<any>;
-  InfotoGet$: Observable<Profile>;
+
   public myData;
 
   constructor(private afAuth: AngularFireAuth, public navCtrl: NavController, public navParams: NavParams, private toast: ToastController, private afDatabase: AngularFireDatabase, private UserInfo: UserInfoService, private global: Global)
