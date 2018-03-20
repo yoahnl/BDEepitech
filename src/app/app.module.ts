@@ -19,6 +19,9 @@ import { HomePage } from "../pages/home/home";
 import {ProfilePage} from "../pages/profile/profile";
 import {Global} from "../models/global";
 
+// My Service
+import {UserInfoService} from "../services/userInfo/UserInfo.service";
+
 
 @NgModule({
   declarations: [
@@ -47,7 +50,8 @@ import {Global} from "../models/global";
     StatusBar,
     SplashScreen,
     Global,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    UserInfoService
   ]
 })
 export class AppModule {}

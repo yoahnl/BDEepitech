@@ -5,6 +5,10 @@ import { AngularFireAuth } from "angularfire2/auth";
 import {AngularFireDatabase} from "angularfire2/database";
 import {Profile} from "../../models/profile";
 import {Observable} from "rxjs/Observable";
+import {UserInfoService} from "../../services/userInfo/UserInfo.service";
+import {UserInfo} from "firebase/app";
+import {Pro} from "@ionic/pro";
+import {Global} from "../../models/global";
 
 /**
  * Generated class for the HomePage page.
@@ -23,17 +27,18 @@ export class HomePage
   info: any;
   labels: any;
   header: Observable<any>;
+  InfotoGet$: Observable<Profile>;
   public myData;
 
-  constructor(private afAuth: AngularFireAuth, public navCtrl: NavController, public navParams: NavParams, private toast: ToastController, private afDatabase: AngularFireDatabase)
+  constructor(private afAuth: AngularFireAuth, public navCtrl: NavController, public navParams: NavParams, private toast: ToastController, private afDatabase: AngularFireDatabase, private UserInfo: UserInfoService, private global: Global)
   {
-
 
   }
 
 
   ionViewWillLoad()
   {
+
     this.afAuth.authState.subscribe(data => {
       this.toast.create({
         message: `Welcome to the Epitech's BDE application ${data.email}`,
@@ -47,12 +52,15 @@ export class HomePage
       this.header.subscribe(data =>
       {
         this.myData = data;
-        //this.myData = this.myData[0];
+        this.global.info = data;
+        for (let data of this.myData)
+        {
+          this.global = data;
+        }
 
       });
     });
-
-
+    console.log(this.global);
   }
 
   getUserInfo(): any
