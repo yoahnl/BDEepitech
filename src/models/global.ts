@@ -5,5 +5,13 @@ import {Profile} from "./profile";
 export class Global
 {
   info: Profile;
+  public username: string;
+  public firstname: string;
+  public lastname: string;
 
+  getInfo(): Profile
+  {
+    console.log(this.info);
+    return this.info;
+  }
 }

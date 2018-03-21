@@ -18,9 +18,10 @@ import {RegisterPage} from "../pages/register/register";
 import { HomePage } from "../pages/home/home";
 import {ProfilePage} from "../pages/profile/profile";
 import {Global} from "../models/global";
-
 // My Service
 import {UserInfoService} from "../services/userInfo/UserInfo.service";
+import {AuthService} from "../services/userInfo/Auth.service";
+import {UserPage} from "../pages/user/user";
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import {UserInfoService} from "../services/userInfo/UserInfo.service";
     LoginPage,
     RegisterPage,
     HomePage,
-    ProfilePage
+    ProfilePage,
+    UserPage
   ],
   imports: [
     BrowserModule,
@@ -44,14 +46,16 @@ import {UserInfoService} from "../services/userInfo/UserInfo.service";
     LoginPage,
     RegisterPage,
     HomePage,
-    ProfilePage
+    ProfilePage,
+    UserPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     Global,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    UserInfoService
+    UserInfoService,
+    AuthService
   ]
 })
 export class AppModule {}

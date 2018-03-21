@@ -36,8 +36,6 @@ export class UserInfoService
     this.header.subscribe(data =>
     {
       this.info = data;
-     // console.log(this.info);
-
     });
   }
 

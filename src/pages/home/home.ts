@@ -1,9 +1,8 @@
 ///<reference path="../../models/global.ts"/>
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import {IonicPage, MenuController, NavController, NavParams, ToastController} from 'ionic-angular';
 import { AngularFireAuth } from "angularfire2/auth";
 import {AngularFireDatabase} from "angularfire2/database";
-import {Profile} from "../../models/profile";
 import {Observable} from "rxjs/Observable";
 import {UserInfoService} from "../../services/userInfo/UserInfo.service";
 import {Global} from "../../models/global";
@@ -25,27 +24,23 @@ export class HomePage
   info: any;
   labels: any;
   header: Observable<any>;
-
   public myData;
 
-  constructor(private afAuth: AngularFireAuth, public navCtrl: NavController, public navParams: NavParams, private toast: ToastController, private afDatabase: AngularFireDatabase, private UserInfo: UserInfoService, private global: Global)
+  constructor(private afAuth: AngularFireAuth, public navCtrl: NavController, public navParams: NavParams, private toast: ToastController, private afDatabase: AngularFireDatabase, private global: Global, public menu: MenuController)
   {
 
   }
 
+  ionViewDidEnter()
+  {
+    this.menu.swipeEnable(true);
+  }
 
   ionViewWillLoad()
   {
 
-    this.afAuth.authState.subscribe(data => {
-      this.toast.create({
-        message: `Welcome to the Epitech's BDE application ${data.email}`,
-        duration: 3000
-      }).present();
-
-      console.log(data.uid);
-
-
+    this.afAuth.authState.subscribe(data =>
+    {
       this.header = this.afDatabase.list('/profile/' + data.uid).valueChanges();
       this.header.subscribe(data =>
       {
@@ -53,12 +48,17 @@ export class HomePage
         this.global.info = data;
         for (let data of this.myData)
         {
-          this.global = data;
+          this.global.info = data;
+          this.global.firstname = data.firstname;
+          this.global.lastname = data.lastname;
+          this.global.username = data.username;
         }
-
       });
     });
-    console.log(this.global);
+    this.toast.create({
+      message: `Welcome to the Epitech's BDE application`,
+      duration: 3000
+    }).present();
   }
 
   getUserInfo(): any
@@ -74,6 +74,4 @@ export class HomePage
       });
     }
   }
-
-
 }

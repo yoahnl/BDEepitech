@@ -4,24 +4,35 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
+
 <ion-header>
-
   <ion-navbar>
-    <ion-title>Home</ion-title>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+        Home
+    </ion-title>
   </ion-navbar>
-
 </ion-header>
-
-
 <ion-content padding>
 
 
-    Username: {{ global.username }}
-    <br>
-    First name:  {{ global.firstname }}
-    <br>
-    Last name:  {{ global.lastname }}
-    <br>
+  Username: {{ global.username }}
+  <br>
+  First name:  {{ global.firstname }}
+  <br>
+  Last name:  {{ global.lastname }}
+  <br>
 
+
+  <button ion-button block (click)="goToProfile()">Profile</button>
 
 </ion-content>
+<ion-nav [root]="Homepage" #nav></ion-nav>
+
+
+
+
+
+
